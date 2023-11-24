@@ -13,7 +13,21 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Vamos Cozinhar?',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: Colors.pink,
+        primarySwatch: Colors.pink,
+        hintColor: Colors.amber,
+        fontFamily: 'Raleway',
+        canvasColor: const Color.fromRGBO(255, 254, 229, 1),
+        textTheme: ThemeData.light().textTheme.copyWith(
+              titleLarge: const TextStyle(
+                fontSize: 20,
+                fontFamily: 'RobotoCondensed',
+              ),
+              titleMedium: const TextStyle(
+                  fontSize: 18,
+                  fontFamily: 'RobotoCondensed',
+                  color: Colors.white),
+            ),
       ),
       home: const CategoriesScreen(),
     );
