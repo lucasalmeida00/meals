@@ -21,7 +21,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final List<Meal> _availableMeals = DUMMY_MEALS;
+  final List<Meal> meals = DUMMY_MEALS;
   Settings settings = Settings();
 
   _onChangeSettings(String key, bool value) {
@@ -52,7 +52,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   List<Meal> _filterMeals() {
-    return _availableMeals.where((meal) {
+    return meals.where((meal) {
       final filterGluten = settings.isGlutenFree && !meal.isGlutenFree;
       final filterLactose = settings.isLactoseFree && !meal.isLactoseFree;
       final filterVegan = settings.isVegan && !meal.isVegan;
