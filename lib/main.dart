@@ -1,4 +1,9 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
+import 'package:meals/data/dummy_data.dart';
+import 'package:meals/models/meal.dart';
+import 'package:meals/models/settings.dart';
 import 'package:meals/screens/meal_detail_screen.dart';
 import 'package:meals/screens/tabs_screen.dart';
 import 'package:meals/utils/app_routes.dart';
@@ -10,8 +15,43 @@ void main() {
   runApp(const MyApp());
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final List<Meal> _availableMeals = DUMMY_MEALS;
+  Settings settings = Settings();
+
+  _onChangeSettings(String key, bool value) {
+    switch (key) {
+      case 'gluten':
+        setState(() {
+          settings.isGlutenFree = value;
+        });
+        break;
+      case 'lactose':
+        setState(() {
+          settings.isLactoseFree = value;
+        });
+        break;
+      case 'vegan':
+        setState(() {
+          settings.isVegan = value;
+        });
+        break;
+      case 'vegetarian':
+        setState(() {
+          settings.isVegetarian = value;
+        });
+        break;
+      default:
+        break;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +71,16 @@ class MyApp extends StatelessWidget {
                 titleMedium: const TextStyle(
                     fontSize: 18,
                     fontFamily: 'RobotoCondensed',
-                    color: Colors.white),
+                    color: Colors.grey),
               ),
         ),
         routes: {
           AppRoutes.HOME: (ctx) => const TabsScreen(),
-          AppRoutes.CATEGORIES_MEALS: (ctx) => const CategoriesMealsScreen(),
+          AppRoutes.CATEGORIES_MEALS: (ctx) =>
+              CategoriesMealsScreen(_availableMeals),
           AppRoutes.MEAL_DETAIL: (ctx) => const MealDetailScreen(),
-          AppRoutes.SETTINGS: (context) => const SettingsScreen(),
+          AppRoutes.SETTINGS: (context) =>
+              SettingsScreen(onChange: _onChangeSettings, settings: settings)
         });
   }
 }
