@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:meals/components/text_icon.dart';
 import 'package:meals/models/meal.dart';
 
 class MealItem extends StatelessWidget {
@@ -34,19 +35,37 @@ class MealItem extends StatelessWidget {
                     fit: BoxFit.cover,
                   ),
                 ),
+                Positioned(
+                  right: 10,
+                  bottom: 20,
+                  child: Container(
+                    width: 300,
+                    color: Colors.black54,
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 5,
+                      horizontal: 20,
+                    ),
+                    child: Text(
+                      meal.title,
+                      style: const TextStyle(
+                        fontSize: 26,
+                        color: Colors.white,
+                      ),
+                      softWrap: true,
+                      overflow: TextOverflow.fade,
+                    ),
+                  ),
+                )
               ],
             ),
             Padding(
               padding: const EdgeInsets.all(20),
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Expanded(
-                    child: Text(
-                      meal.title,
-                      style: Theme.of(context).textTheme.titleMedium,
-                    ),
-                  ),
-                  Text('${meal.duration} min'),
+                  TextIcon(icon: Icons.schedule, text: '${meal.duration} min'),
+                  TextIcon(icon: Icons.work, text: meal.complexityText),
+                  TextIcon(icon: Icons.attach_money, text: meal.costText),
                 ],
               ),
             ),
