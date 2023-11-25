@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:meals/data/dummy_data.dart';
 import 'package:meals/models/meal.dart';
@@ -53,6 +51,19 @@ class _MyAppState extends State<MyApp> {
     }
   }
 
+  List<Meal> _filterMeals() {
+    return _availableMeals.where((meal) {
+      final filterGluten = settings.isGlutenFree && !meal.isGlutenFree;
+      final filterLactose = settings.isLactoseFree && !meal.isLactoseFree;
+      final filterVegan = settings.isVegan && !meal.isVegan;
+      final filterVegetarian = settings.isVegetarian && !meal.isVegetarian;
+      return !filterGluten &&
+          !filterLactose &&
+          !filterVegan &&
+          !filterVegetarian;
+    }).toList();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -77,7 +88,7 @@ class _MyAppState extends State<MyApp> {
         routes: {
           AppRoutes.HOME: (ctx) => const TabsScreen(),
           AppRoutes.CATEGORIES_MEALS: (ctx) =>
-              CategoriesMealsScreen(_availableMeals),
+              CategoriesMealsScreen(_filterMeals()),
           AppRoutes.MEAL_DETAIL: (ctx) => const MealDetailScreen(),
           AppRoutes.SETTINGS: (context) =>
               SettingsScreen(onChange: _onChangeSettings, settings: settings)
